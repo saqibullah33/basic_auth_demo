@@ -9,6 +9,17 @@ const app = express();
 app.use(cors({ credentials: true, origin: '*' }));
 
 app.use(cookieParser())
+app.use((req, res, next) => {
+  const allowedOrigins = ['http://localhost:5173']; // Add your frontend origin here
+  const origin = req.headers.origin;
+
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+
+  res.header('Access-Control-Allow-Credentials', true);
+  next();
+});
 
 // Secret key for JWT signing
 const secretKey = 'your-secret-key';
