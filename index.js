@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser')
 
 
 const app = express();
-app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
+app.use(cors({ credentials: true, origin: '*' }));
 
 app.use(cookieParser())
 
@@ -25,7 +25,7 @@ app.post('/login', (req, res) => {
   const token = jwt.sign({ userId }, secretKey, { expiresIn: '1h' });
 
   // Set JWT as HTTP-only cookie
-  res.cookie('jwt', token, { httpOnly: true, sameSite: 'Lax', secure: false });
+  res.cookie('jwt', token, { httpOnly: true, sameSite: 'none', secure: true });
 
   res.json({ success: true });
 });
