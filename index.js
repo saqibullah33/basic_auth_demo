@@ -8,7 +8,6 @@ var cookieParser = require('cookie-parser')
 const app = express();
 app.use(cors({ credentials: true, origin: '*' }));
 
-app.use(cookieParser())
 app.use((req, res, next) => {
   const allowedOrigins = ['http://localhost:5173']; // Add your frontend origin here
   const origin = req.headers.origin;
@@ -17,8 +16,16 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
 
-  res.header('Access-Control-Allow-Credentials', true);
-  next();
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  if (req.method === 'OPTIONS') {
+    // Preflight request
+    res.sendStatus(200);
+  } else {
+    next();
+  }
 });
 
 // Secret key for JWT signing
@@ -26,7 +33,7 @@ const secretKey = 'your-secret-key';
 
 // Endpoint for user login
 app.get('/', (req, res) => {	
-    res.send('Hello World ----1');
+    res.send('Hello World ----2');
     });
 app.post('/login', (req, res) => {
   // For demonstration, assume the user is authenticated and retrieve their user ID
