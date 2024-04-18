@@ -26,7 +26,7 @@ const secretKey = 'your-secret-key';
 
 // Endpoint for user login
 app.get('/', (req, res) => {	
-    res.send('Hello World ----');
+    res.send('Hello World ----1');
     });
 app.post('/login', (req, res) => {
   // For demonstration, assume the user is authenticated and retrieve their user ID
